@@ -1,2 +1,0 @@
-<input name="<?php echo $optionsName; ?>[widget_user_email]" type="text" size="50" value="<?php echo $adminEmail; ?>" <?php if($locked) echo 'readonly="readonly"'; ?> />
-<span class='description'>Registered email address against widget.</span>
