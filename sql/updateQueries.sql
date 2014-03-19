@@ -1,0 +1,1 @@
+CREATE INDEX `update_requested` on `wp_shopbop_cache` (`update_requested` ASC);
