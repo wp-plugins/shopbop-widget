@@ -401,9 +401,11 @@ function shopbop_widget_update()
     $updater->runUpdate();
 }
 
+$coreWidgetUpdate = new CoreWidgetUpdate();
+
 add_action(CoreWidgetUpdate::SCHEDULE_HOOK, 'shopbop_widget_update');
-add_filter('cron_schedules', array('CoreWidgetUpdate', 'addCronSchedule'));
+add_filter('cron_schedules', array($coreWidgetUpdate, 'addCronSchedule'));
 
 //Register cron schedul event on every page. 
 //But this is registered only once and will not register if it already exist.
-add_action( 'wp', array('CoreWidgetUpdate','registerScheduledEvent' ));
+add_action( 'wp', array($coreWidgetUpdate,'registerScheduledEvent' ));

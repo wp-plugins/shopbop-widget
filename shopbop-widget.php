@@ -4,7 +4,7 @@
 Plugin Name: Shopbop
 Plugin URI: http://www.shopbop.com/go/widgets
 Description: This plugin allows you to add the official Shopbop widget to the sidebar of your Wordpress blog.
-Version: 2.0
+Version: 2.0.2
 Author: Stickyeyes
 Author URI: http://www.stickyeyes.com/
 License: GPL2

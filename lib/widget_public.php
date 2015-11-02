@@ -45,35 +45,6 @@ class CoreWidgetPublic extends WP_Widget
 	}
 
 	/**
-	 * Displays the form on the widget area.
-	 *
-	 * @param string $instance values of each fields.
-	 *
-	 * @see WP_Widget::form()
-	 *
-	 * @return void
-	 */
-	public function form($instance)
-	{
-
-	}
-
-	/**
-	 * Handles updating widget.
-	 *
-	 * @param string $newInstance values of the current instant
-	 * @param string $oldInstance values of the old instant
-	 *
-	 * @see WP_Widget::update()
-	 *
-	 * @return void
-	 */
-	public function update($newInstance, $oldInstance)
-	{
-
-	}
-
-	/**
 	 * Display the output of the widget.
 	 *
 	 * @param string $args 	   arguments
@@ -86,11 +57,6 @@ class CoreWidgetPublic extends WP_Widget
 	public function widget($args, $instance)
 	{
         $optionSettings = array();
-		// outputs the content of the widget
-		$title = apply_filters('Widget_title', $instance['title']);
-
-		if($title)
-			echo $title;
 
 		//Set the widget display options here
 		//Stickywidget width by default it is 200px or it can also be set in the plugin options.

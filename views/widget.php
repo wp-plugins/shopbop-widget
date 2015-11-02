@@ -42,7 +42,7 @@ $widgetCssPrefix = constant($widgetPrefix . 'WIDGET_CSS');
 			<ul>
 				<?php foreach($data['pane1'] as $item): ?>
 	                <li>
-				        <a class="<?php echo $widgetCssPrefix; ?>product-link" href="<?php echo $item['url']; ?>" target="_blank" rel="nofollow">
+				        <a class="<?php echo $widgetCssPrefix; ?>product-link" href="<?php echo htmlspecialchars($item['url']); ?>" target="_blank" rel="nofollow">
 				            <img src="<?php echo $item['image']; ?>" alt="" width="65" height="128" />
 						    <span class="<?php echo $widgetCssPrefix; ?>widget-carousel-mask"></span>
 				        </a>
@@ -56,7 +56,7 @@ $widgetCssPrefix = constant($widgetPrefix . 'WIDGET_CSS');
                                     $nofollow = 'rel="nofollow"';
                                 }
                                 ?>
-    							<a class="<?php echo $widgetCssPrefix; ?>product-link" href="<?php echo (!empty($item['anchorUrl']) && !is_null($item['anchorUrl']) && $item['anchorUrl'] != "") ? $item['anchorUrl'] : $item['url'];  ?>" target="_blank" <?php echo $nofollow; ?>>
+    							<a class="<?php echo $widgetCssPrefix; ?>product-link" href="<?php echo htmlspecialchars((!empty($item['anchorUrl']) && !is_null($item['anchorUrl']) && $item['anchorUrl'] != "") ? $item['anchorUrl'] : $item['url']);  ?>" target="_blank" <?php echo $nofollow; ?>>
                                     <?php if(array_key_exists('anchorText', $item) && $item['anchorText'] != ""): ?>
                                     <?php echo (strlen($item['anchorText']) > (constant($widgetPrefix . 'WIDGET_ANCHOR_TEXT_MAX_LENGTH')-5)) ? substr($item['anchorText'], 0, (constant($widgetPrefix . 'WIDGET_ANCHOR_TEXT_MAX_LENGTH')-5)) . '...' : $item['anchorText']; ?>
                                     <?php else: ?>
@@ -64,7 +64,7 @@ $widgetCssPrefix = constant($widgetPrefix . 'WIDGET_CSS');
                                     <?php endif; ?>
 								</a>
     						</p>
-    						<a class="<?php echo $widgetCssPrefix; ?>product-link" href="<?php echo $item['url']; ?>" target="_blank" rel="nofollow" class="<?php echo $widgetCssPrefix; ?>widget-carousel-description-button-anchor">
+    						<a class="<?php echo $widgetCssPrefix; ?>product-link <?php echo $widgetCssPrefix; ?>widget-carousel-description-button-anchor" href="<?php echo htmlspecialchars($item['url']); ?>" target="_blank" rel="nofollow">
     						    <span class="<?php echo $widgetCssPrefix; ?>widget-carousel-button"><?php  echo __("View", constant($widgetPrefix . 'WIDGET_TRANSLATION')); ?></span>
     						</a>
     						</div>
@@ -90,7 +90,7 @@ $widgetCssPrefix = constant($widgetPrefix . 'WIDGET_CSS');
 			<ul>
 			    <?php foreach($data['pane2'] as $item): ?>
 				    <li>
-    					<a class="<?php echo $widgetCssPrefix; ?>product-link" href="<?php echo $item['url']; ?>" target="_blank" rel="nofollow">
+    					<a class="<?php echo $widgetCssPrefix; ?>product-link" href="<?php echo htmlspecialchars($item['url']); ?>" target="_blank" rel="nofollow">
     					    <img src="<?php echo $item['image']; ?>" alt="" width="65" height="128" />
     						<span class="<?php echo $widgetCssPrefix; ?>widget-carousel-mask"></span>
     				    </a>
@@ -104,7 +104,7 @@ $widgetCssPrefix = constant($widgetPrefix . 'WIDGET_CSS');
                                     $nofollow = 'rel="nofollow"';
                                 }
                                 ?>
-    							<a class="<?php echo $widgetCssPrefix; ?>product-link" href="<?php echo (!empty($item['anchorUrl']) && !is_null($item['anchorUrl']) && $item['anchorUrl'] != "") ? $item['anchorUrl'] : $item['url'];  ?>" target="_blank" <?php echo $nofollow; ?>>
+    							<a class="<?php echo $widgetCssPrefix; ?>product-link" href="<?php echo htmlspecialchars((!empty($item['anchorUrl']) && !is_null($item['anchorUrl']) && $item['anchorUrl'] != "") ? $item['anchorUrl'] : $item['url']);  ?>" target="_blank" <?php echo $nofollow; ?>>
                                     <?php if(array_key_exists('anchorText', $item) && $item['anchorText'] != ""): ?>
                                         <?php echo (strlen($item['anchorText']) > (constant($widgetPrefix . 'WIDGET_ANCHOR_TEXT_MAX_LENGTH')-5)) ? substr($item['anchorText'], 0, (constant($widgetPrefix . 'WIDGET_ANCHOR_TEXT_MAX_LENGTH')-5)) . '...' : $item['anchorText']; ?>
                                     <?php else: ?>
@@ -112,7 +112,7 @@ $widgetCssPrefix = constant($widgetPrefix . 'WIDGET_CSS');
                                     <?php endif; ?>
 								</a>
     						</p>
-    						<a class="<?php echo $widgetCssPrefix; ?>product-link" href="<?php echo $item['url'];  ?>" target="_blank" rel="nofollow" class="<?php echo $widgetCssPrefix; ?>widget-carousel-description-button-anchor">
+    						<a class="<?php echo $widgetCssPrefix; ?>product-link <?php echo $widgetCssPrefix; ?>widget-carousel-description-button-anchor" href="<?php echo htmlspecialchars($item['url']);  ?>" target="_blank" rel="nofollow">
     						    <span class="<?php echo $widgetCssPrefix; ?>widget-carousel-button"><?php  echo __("View", constant($widgetPrefix . 'WIDGET_TRANSLATION')); ?></span>
     						</a>
     					</div>

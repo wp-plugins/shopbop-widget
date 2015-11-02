@@ -96,6 +96,10 @@ if(!defined($widgetPrefix . 'WIDGET_DEFAULT_AFFILIATE_CJ_ID'))
 if(!defined($widgetPrefix . 'WIDGET_WS_WP_OPTIONS_NAME'))
 	define($widgetPrefix . 'WIDGET_WS_WP_OPTIONS_NAME', 'ShopbopWidgetWsOptions');
 
+//Widget options to store current version.
+if(!defined($widgetPrefix . 'WIDGET_VERSION_OPTION'))
+	define($widgetPrefix . 'WIDGET_VERSION_OPTION', 'ShopbopWidgetVersion');
+
 //Widget options to store webservice data.
 if(!defined($widgetPrefix . 'ACTIVATE_PLUGIN_REDIRECT'))
 	define($widgetPrefix . 'ACTIVATE_PLUGIN_REDIRECT', 'ShopbopActivatePluginRedirect');

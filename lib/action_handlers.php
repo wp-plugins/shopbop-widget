@@ -51,9 +51,8 @@ if(!class_exists('CoreWidget'))
     		//add required files to header.
     		add_action("template_redirect", array($this, 'coreWidgetStylesScripts'));
 
-            //Runs on widget upgrade.
-            add_filter('update_plugin_complete_actions',  array($this, 'coreWidgetUpdatePluginCompleteAction'));
-            add_filter('update_bulk_plugins_complete_actions',  array($this, 'coreWidgetUpdateBulkPluginCompleteAction'));
+            //Check if an update has occcured.
+            add_action('admin_init', array($this, 'checkUpgradeRequired'));
 
     		add_action('mktMsgCacheScheduler', array($this, 'mktMsgCache'));
 
@@ -66,23 +65,6 @@ if(!class_exists('CoreWidget'))
     	}
 
         /**
-         * Run on Bulk widget upgrade
-         *
-         */
-        public function coreWidgetUpdateBulkPluginCompleteAction()
-        {
-            //Get upgrade information. only do that when Shopbop widget update.PUBLIC_WIDGET_BASE_FILE_AND_SLUG_NAME
-            $pluginUpdateInfo = $_REQUEST;
-            if($pluginUpdateInfo['action'] == 'update-selected')
-            {
-                if($pluginUpdateInfo['plugins'] == constant(self::$widgetPrefix.'PUBLIC_WIDGET_BASE_FILE_AND_SLUG_NAME') || strpos($pluginUpdateInfo['plugins'],'shopbop-widget.php') !== false)
-                {
-                    $this->runPostUpgradeCode();
-                }
-            }
-        }
-
-        /**
          * Run on Post upgrade or post update
          */
         public function runPostUpgradeCode()
@@ -90,28 +72,27 @@ if(!class_exists('CoreWidget'))
             //eula option delete when upgrade to re-agree.
             delete_option(constant(self::$widgetPrefix.'WIDGET_PLUGIN_WP_EULA_AGREEMENT'));
 
+            //Update widget settings to fix 4.3 bug
+            $widget   = new CoreWidgetPublic();
+            $settings = $widget->get_settings();
+
+            if(is_array($settings))
+            {
+                foreach($settings as $key => $value)
+                {
+                    if(is_numeric($key) && !is_array($value))
+                    {
+                        $settings[$key] = array();
+                    }
+                }
+
+                $widget->save_settings($settings);
+            }
+
             $widgetUpdate = new CoreWidgetUpdate();
             if(!$widgetUpdate->checkUpdateRequestIndexExist())
                 self::loadUpdateQueries();
         }
-
-        /**
-         * Run code on widgt upgrade
-         *
-         */
-        public function coreWidgetUpdatePluginCompleteAction()
-        {
-            //Get upgrade information. only do that when Shopbop widget update.PUBLIC_WIDGET_BASE_FILE_AND_SLUG_NAME
-            $pluginUpdateInfo = $_REQUEST;
-            if($pluginUpdateInfo['action'] == 'upgrade-plugin')
-            {
-                if($pluginUpdateInfo['plugin'] == constant(self::$widgetPrefix.'PUBLIC_WIDGET_BASE_FILE_AND_SLUG_NAME') || strpos($pluginUpdateInfo['plugin'],'shopbop-widget.php') !== false)
-                {
-                    $this->runPostUpgradeCode();
-                }
-            }
-        }
-
 
     	/**
     	 * Http request time out.
@@ -326,6 +307,7 @@ if(!class_exists('CoreWidget'))
 
     		add_option(constant(self::$widgetPrefix.'WIDGET_PLUGIN_WP_OPTIONS_NAME'), $widgetPluginOptions);
             update_option(constant(self::$widgetPrefix.'WIDGET_PLUGIN_WP_OPTIONS_NAME'), $widgetPluginOptions);
+            update_option(constant(self::$widgetPrefix.'WIDGET_VERSION_OPTION'), constant(self::$widgetPrefix.'WIDGET_VERSION'));
 
     		$widgetWsOptions = get_option(constant(self::$widgetPrefix.'WIDGET_WS_WP_OPTIONS_NAME'));
 
@@ -453,12 +435,26 @@ if(!class_exists('CoreWidget'))
     	 */
     	public function loadPublicWidget()
     	{
-    		$widgetWsOptions = get_option(constant(self::$widgetPrefix.'WIDGET_WS_WP_OPTIONS_NAME'));
+            $widgetWsOptions = get_option(constant(self::$widgetPrefix.'WIDGET_WS_WP_OPTIONS_NAME'));
     		if(isset($widgetWsOptions['registered']) && $widgetWsOptions['registered'] == true)
     		{
     			register_widget('CoreWidgetPublic');
     		}
     	}
+
+        /**
+         * Check if an upgrade has occurred.
+         *
+         * @return void
+         */
+        public function checkUpgradeRequired()
+        {
+            if(get_option(constant(self::$widgetPrefix.'WIDGET_VERSION_OPTION')) != constant(self::$widgetPrefix.'WIDGET_VERSION'))
+            {
+                $this->runPostUpgradeCode();
+                update_option(constant(self::$widgetPrefix.'WIDGET_VERSION_OPTION'), constant(self::$widgetPrefix.'WIDGET_VERSION'));
+            }
+        }
 
     	/**
     	 * Uninstall the tables.
